@@ -1,0 +1,16 @@
+# Build-Artefakte
+build/
+*.idsig
+
+# WICHTIG: Signaturschlüssel niemals committen!
+# Wer den Keystore besitzt, kann Updates der App signieren.
+keystore.jks
+*.jks
+*.keystore
+
+# Lokale Konfiguration / Sensitive
+*.log
+dryrun/
+
+# Build-Ausgabe im Wurzelverzeichnis (Release-APKs liegen unter releases/)
+/QL-Druckdienst.apk
