@@ -52,9 +52,16 @@ if [ ! -f keystore.jks ]; then
         -keyalg RSA -keysize 2048 -validity 10000 \
         -storepass qlprint -keypass qlprint \
         -dname "CN=QL Druckdienst DIY" >/dev/null 2>&1
+    KS_PASS=qlprint
     echo "  Neuer Signaturschlüssel erzeugt: keystore.jks (Passwort: qlprint)"
 fi
-"$BT/apksigner" sign --ks keystore.jks --ks-pass pass:qlprint --key-pass pass:qlprint \
+# Passwort für den eigenen Keystore: Umgebungsvariable KS_PASS oder Eingabe.
+# (Existiert kein Keystore, wird oben ein Wegwerf-Schlüssel mit 'qlprint'
+#  erzeugt – das gilt für CI-Builds und Mitwirkende ohne eigenen Schlüssel.)
+if [ -z "${KS_PASS:-}" ]; then
+    read -rsp 'Keystore-Passwort: ' KS_PASS; echo >&2
+fi
+"$BT/apksigner" sign --ks keystore.jks --ks-pass pass:"$KS_PASS" --key-pass pass:"$KS_PASS" \
     --out "QL-Druckdienst.apk" build/aligned.apk
 "$BT/apksigner" verify --print-certs "QL-Druckdienst.apk" | head -3
 
