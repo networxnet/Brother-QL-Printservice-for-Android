@@ -82,7 +82,7 @@ Druckmenü funktioniert, und jedes PDF:
 | **Auto-Orientierung** | Wird nur gedreht, wenn die Druckfläche dadurch besser gefüllt wird (Best-Fill) – korrekt auch für quere Einzeletiketten wie 102 × 51 |
 | **Automatischer Weißrand-Zuschnitt** | Ungekürztes A4-Versand-PDF (eBay/DHL) rein – der dichteste Inhaltsblock (das eigentliche Etikett) wird erkannt, mit 2 mm Rand zugeschnitten und gedruckt |
 | **Einzeletiketten-Modus** | Medientyp wählbar: Endlosrolle oder DK-Einzeletiketten (14 Formate, Inhalt wird stets eingepasst) |
-| **Intelligentes Längenlimit** | Standard 250 mm pro Etikett; mehr nur mit Haken „Lange Etiketten erlauben“; absolute Grenze 3 m; Failsafe direkt im Protokoll-Encoder |
+| **Intelligentes Längenlimit** | Standard 250 mm pro Etikett; mehr nur mit Haken „Lange Etiketten erlauben“; absolute Grenze 3 m; Failsafe direkt im Protokoll-Encoder – schützt vor versehentlichen Endlosdrucken und Rollenverschwendung bei unpassenden Druckdaten |
 | **Vorab-Statusprüfung** | Druckerstatus vor dem Druck: falsches Medium, offene Abdeckung, keine Rolle → klare Fehlermeldung statt Etikettenmüll |
 | **Praktische Extras** | Netzwerk-Suche nach dem Drucker, Testdruck, Selbsttest, Fehlerprotokoll auf dem Gerät mit Teilen-Funktion |
 

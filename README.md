@@ -104,9 +104,13 @@ the untrimmed A4 PDF directly and let the auto-trimmer extract the label.
 
 ## Supported printers
 
-QL-500, 550, 560, 570, 580N, 650TD, 700, 710W, 720NW, 800, 810W, 820NWB,
-1050, 1060N, 1100, **1110NWB**, 1115NWB · rolls 12–103 mm wide ·
-network connection only (no USB/Bluetooth).
+**Directly usable – models with a network interface:** QL-580N, QL-710W,
+QL-720NW, QL-810W, QL-820NWB, QL-1060N, **QL-1110NWB** *(verified on real
+hardware)*, QL-1115NWB · rolls 12–62 mm (103 mm only on
+QL-1060N/1110NWB/1115NWB) · network only (LAN/WLAN, raw port 9100).
+
+**Protocol-ready but not reachable (USB-only):** QL-500, 550, 560, 570, 650TD,
+700, 800, 1050, 1100 – USB or Bluetooth transport is on the roadmap.
 
 The print-data encoder is **byte-for-byte identical** to the established
 [`brother_ql`](https://github.com/pklaus/brother_ql) tool – verified by an
