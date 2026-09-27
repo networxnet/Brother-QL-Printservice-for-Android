@@ -17,7 +17,9 @@ Brother's QL label printers are *roll* printers – made for labels of any lengt
 Android's **Brother Print Service Plugin** nevertheless offers only a fixed list
 of paper sizes (62 × 29, 62 × 100, 62 × 1 m …). Want to print a 62 × 145 mm
 shipping label from [snake-label](https://snake-label.de)? Not possible –
-the plugin simply doesn't offer that size, and Android provides no way to add it.
+the plugin simply doesn't offer that size: you get an error message or a
+truncated / over-long label. And Android provides no way to add custom
+sizes – everything is hard-coded.
 
 ## The solution
 
@@ -50,7 +52,7 @@ That's the core question – here is the honest comparison:
 | Runaway protection | – | 250 mm default cap, longer only with explicit checkbox, 3 m hard limit, failsafe in the protocol encoder |
 | Error handling | Errors surface late (wasted labels) | Pre-flight status check: wrong media, open cover, empty roll → clear message |
 | Transparency & size | ~44 MB, closed source | ~35 kB, GPLv3, protocol core **byte-verified** against `brother_ql` in CI |
-| Printer support | Broad (inkjets, laser, USB, Bluetooth) | QL series only, network only – but for those: see above |
+| Printer support | Broad for inkjets & lasers; QL series only QL-810W/820NWB/1110NWB | QL series only – but every network-capable model (incl. QL-580N, 720NW, 1060N) |
 
 If you print family photos on a Brother inkjet, stay with the original plugin.
 If you print **labels** on a QL, this service is what the plugin should have been.
@@ -81,7 +83,7 @@ menu works, and any PDF:
 | **Auto orientation** | Rotates only when it improves fill (best-fit rule) – works for landscape die-cut labels like 102 × 51 and for banners |
 | **Automatic white-margin trim** | Feed an untrimmed A4 shipping PDF (eBay/DHL) – the densest content block (the actual label) is detected, cropped with a 2 mm margin and printed |
 | **Die-cut label mode** | Media type switch: continuous roll *or* DK die-cut labels (14 formats, content always fit to the fixed size) |
-| **Intelligent length limit** | Default 250 mm per label; longer output requires an explicit “allow long labels” checkbox; absolute protocol cap 3 m; encoder-level failsafe |
+| **Intelligent length limit** | Default 250 mm per label; longer output requires an explicit “allow long labels” checkbox; absolute protocol cap 3 m; encoder-level failsafe – prevents accidental endless prints and wasted roll material on mismatched documents |
 | **Pre-flight status check** | Reads printer status before printing: wrong media, open cover, empty roll → clear error message instead of wasted labels |
 | **Sensible defaults** | Network discovery of the printer, test print, self-test, on-device error log with share button |
 
@@ -104,18 +106,34 @@ the untrimmed A4 PDF directly and let the auto-trimmer extract the label.
 
 ## Supported printers
 
-**Directly usable – models with a network interface:** QL-580N, QL-710W,
-QL-720NW, QL-810W, QL-820NWB, QL-1060N, **QL-1110NWB** *(verified on real
-hardware)*, QL-1115NWB · rolls 12–62 mm (103 mm only on
-QL-1060N/1110NWB/1115NWB) · network only (LAN/WLAN, raw port 9100).
+**Tested on real hardware:** QL-1110NWB.
 
-**Protocol-ready but not reachable (USB-only):** QL-500, 550, 560, 570, 650TD,
-700, 800, 1050, 1100 – USB or Bluetooth transport is on the roadmap.
+**QL models with a network interface** (per Brother spec sheets): QL-580N,
+QL-710W, QL-720NW, QL-810W, QL-820NWB, QL-1060N, QL-1115NWB · rolls 12–62 mm
+(103 mm only on QL-1060N/1110NWB/1115NWB) · connected via LAN/WLAN
+(raw port 9100). Field reports – positive or negative – are welcome!
+
+For comparison: according to Brother's own
+[FAQ](https://support.brother.com/g/b/faqend.aspx?c=us&lang=en&prod=p300bteus&faqid=faqp00100210_001),
+the official Brother Print Service Plugin supports only the QL-810W, QL-820NWB
+and QL-1110NWB – older network models like the QL-580N only work with the
+separate *Brother iPrint&Label* app.
 
 The print-data encoder is **byte-for-byte identical** to the established
 [`brother_ql`](https://github.com/pklaus/brother_ql) tool – verified by an
 automated test suite for endless and die-cut media
 ([tools/run_tests.sh](tools/run_tests.sh), runs in CI).
+
+## Roadmap
+
+Loose ideas – your wishes matter more than this list
+([Discussions](https://github.com/networxnet/Brother-QL-Printservice-for-Android/discussions),
+*Ideas* category):
+
+- [ ] English UI – the app is German-only for now
+- [ ] Bluetooth support (SPP/BLE) – for QL models without a network interface
+- [ ] Templates for recurring labels
+- [ ] Verify more QL models in practice – community reports welcome
 
 ## Building & testing
 

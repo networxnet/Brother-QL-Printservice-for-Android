@@ -16,8 +16,9 @@ Brothers QL-Etikettendrucker sind *Rollen*drucker – gedacht für Etiketten in
 beliebiger Länge. Das Android-**Brother Print Service Plugin** bietet trotzdem
 nur eine feste Formatliste (62 × 29, 62 × 100, 62 × 1 m …). Ein 62 × 145 mm
 Versandetikett aus [snake-label](https://snake-label.de) drucken? Geht nicht –
-das Plugin kennt die Größe schlicht nicht, und Android bietet keine Möglichkeit,
-sie zu ergänzen.
+das Plugin kennt die Größe schlicht nicht: Du erhältst eine Fehlermeldung oder
+ein abgeschnittenes bzw. zu langes Etikett. Und Android bietet keine
+Möglichkeit, eigene Formate zu ergänzen – alles ist fest verbaut.
 
 ## Die Lösung
 
@@ -51,7 +52,7 @@ Das ist die Kernfrage – hier der ehrliche Vergleich:
 | Schutz vor Fehldruck | – | 250 mm Standardlimit, mehr nur mit bewusstem Haken, 3 m harte Grenze, Failsafe im Protokoll-Encoder |
 | Fehlerbehandlung | Fehler kommen spät (verbrauchte Etiketten) | Vorab-Statusprüfung: falsches Medium, offene Abdeckung, leere Rolle → klare Meldung |
 | Transparenz & Größe | ~44 MB, Closed Source | ~35 kB, GPLv3, Protokollkern **byteweise verifiziert** gegen `brother_ql` in der CI |
-| Drucker-Support | Breit (Tintenstrahl, Laser, USB, Bluetooth) | Nur QL-Serie, nur Netzwerk – dafür aber: siehe oben |
+| Drucker-Support | Tintenstrahl & Laser breit; QL-Serie nur QL-810W/820NWB/1110NWB | Nur QL-Serie – dafür jedes Modell mit Netzwerkanschluss (auch QL-580N, 720NW, 1060N) |
 
 Wer Familienfotos auf einem Brother-Tintenstrahler druckt, bleibt beim Original-Plugin.
 Wer **Etiketten** auf einem QL druckt, bekommt hier, was das Plugin hätte sein sollen.
@@ -106,14 +107,34 @@ lassen.
 
 ## Unterstützte Drucker
 
-QL-500, 550, 560, 570, 580N, 650TD, 700, 710W, 720NW, 800, 810W, 820NWB,
-1050, 1060N, 1100, **1110NWB**, 1115NWB · Rollen 12–103 mm Breite ·
-nur Netzwerk-Anbindung (kein USB/Bluetooth).
+**Am eigenen Gerät getestet:** QL-1110NWB.
+
+**QL-Modelle mit Netzwerkanschluss** (laut Brother-Datenblatt): QL-580N,
+QL-710W, QL-720NW, QL-810W, QL-820NWB, QL-1060N, QL-1115NWB · Rollen 12–62 mm
+(103 mm nur auf QL-1060N/1110NWB/1115NWB) · Anbindung per LAN/WLAN
+(Raw-Port 9100). Praxisberichte – positiv wie negativ – sind willkommen!
+
+Zum Vergleich: Das offizielle Brother Print Service Plugin unterstützt von der
+QL-Serie laut
+[Brother-FAQ](https://support.brother.com/g/b/faqend.aspx?c=us&lang=en&prod=p300bteus&faqid=faqp00100210_001)
+nur QL-810W, QL-820NWB und QL-1110NWB – ältere Netzwerk-Modelle wie der
+QL-580N laufen dort nur mit der separaten App *Brother iPrint&Label*.
 
 Der Druckdaten-Encoder ist **byteweise identisch** zum etablierten Werkzeug
 [`brother_ql`](https://github.com/pklaus/brother_ql) – verifiziert durch eine
 automatisierte Testsuite für Endlos- und Einzeletiketten-Medien
 ([tools/run_tests.sh](tools/run_tests.sh), läuft in der CI).
+
+## Roadmap
+
+Unverbindliche Gedanken – eure Wünsche zählen mehr als meine Liste
+([Discussions](https://github.com/networxnet/Brother-QL-Printservice-for-Android/discussions),
+Kategorie *Ideas*):
+
+- [ ] Englische Oberfläche – die App ist bisher nur deutsch
+- [ ] Bluetooth-Support (SPP/BLE) – für QL-Modelle ohne Netzwerkanschluss
+- [ ] Vorlagen für wiederkehrende Etiketten
+- [ ] Weitere QL-Modelle in der Praxis verifizieren – Community-Reports willkommen
 
 ## Bauen & Testen
 
