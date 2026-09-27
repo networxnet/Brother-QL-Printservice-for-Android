@@ -31,12 +31,11 @@ jobs:
           distribution: temurin
           java-version: "17"
       - uses: android-actions/setup-android@v3
-      - name: SDK-Komponenten installieren
-        run: sdkmanager --install "platforms;android-35" "build-tools;34.0.0" >/dev/null
+      - name: SDK-Lizenzen akzeptieren und Komponenten installieren
+        run: |
+          yes | sdkmanager --licenses >/dev/null
+          sdkmanager --install "platforms;android-35" "build-tools;34.0.0" >/dev/null
       - name: build.sh ausfuehren
-        env:
-          BT: ${{ env.ANDROID_HOME }}/build-tools/34.0.0
-          AJ: ${{ env.ANDROID_HOME }}/platforms/android-35/android.jar
         run: |
           BT="$ANDROID_HOME/build-tools/34.0.0" \
           AJ="$ANDROID_HOME/platforms/android-35/android.jar" \
