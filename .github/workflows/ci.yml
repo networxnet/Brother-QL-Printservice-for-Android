@@ -30,15 +30,18 @@ jobs:
         with:
           distribution: temurin
           java-version: "17"
-      - uses: android-actions/setup-android@v3
-      - name: SDK-Lizenzen akzeptieren und Komponenten installieren
+      - name: SDK-Komponenten installieren
         run: |
-          yes | sdkmanager --licenses >/dev/null
-          sdkmanager --install "platforms;android-35" "build-tools;34.0.0" >/dev/null
+          # ubuntu-latest bringt das Android SDK vorinstalliert mit
+          ANDROID_HOME=/usr/local/lib/android/sdk
+          SDKMANAGER=$(ls "$ANDROID_HOME"/cmdline-tools/*/bin/sdkmanager | head -1)
+          echo "sdkmanager: $SDKMANAGER"
+          yes | "$SDKMANAGER" --licenses >/dev/null || true
+          "$SDKMANAGER" --install "platforms;android-35" "build-tools;34.0.0" >/dev/null
       - name: build.sh ausfuehren
         run: |
-          BT="$ANDROID_HOME/build-tools/34.0.0" \
-          AJ="$ANDROID_HOME/platforms/android-35/android.jar" \
+          BT=/usr/local/lib/android/sdk/build-tools/34.0.0 \
+          AJ=/usr/local/lib/android/sdk/platforms/android-35/android.jar \
           ./build.sh
       - uses: actions/upload-artifact@v4
         with:
